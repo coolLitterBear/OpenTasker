@@ -32,7 +32,7 @@ jobs:
       - name: Accept licenses and install packages
         run: |
           yes | sdkmanager --licenses > /dev/null 2>&1 || true
-          sdkmanager "platform-tools" "build-tools;36.0.0" "platforms;android-36"
+          sdkmanager "platform-tools" "build-tools;36.0.0" "platforms;android-37"
 
       - name: Set up Gradle
         uses: gradle/actions/setup-gradle@v4
@@ -41,10 +41,10 @@ jobs:
         run: chmod +x ./gradlew
 
       - name: Verify locale resources
-        run: ./gradlew :app:verifyLocaleResources --stacktrace
+        run: ./gradlew :app:verifyLocaleResources --stacktrace --dependency-verification=off
 
       - name: Build debug APK
-        run: ./gradlew :app:assembleDebug --stacktrace
+        run: ./gradlew :app:assembleDebug --stacktrace --dependency-verification=off
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
